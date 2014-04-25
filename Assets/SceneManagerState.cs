@@ -26,7 +26,7 @@ public class SceneManagerState : MonoBehaviour {
 
 	void Start () {
 		paramView = (GameObject.Find("GUI ParamView") as GameObject).guiText;
-		selectedContext = transform.GetChild(0).GetComponent<Collider>();	
+		selectedContext = GetComponent<Collider>();	
 	}
 	
 
@@ -45,7 +45,7 @@ public class SceneManagerState : MonoBehaviour {
 
 		for (int i = 0 ; i < paramNumbers.Length ; i++){
 			if (Input.GetKey(paramNumbers[i])){
-				var v = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+				var v = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 				selectedContext.SendMessage("UpdateParam", new ParamData(i, v));
 				Debug.Log("Sent Something: "+ v);
 			}
@@ -82,7 +82,7 @@ public class SceneManagerState : MonoBehaviour {
 
 	public void UpdateParamDisplay(string[] names){
 		string[] zipped = Functional.Zip(paramKeyNames, names, (a, b) => a + " : " + b).ToArray();
-		paramView.text = string.Join("\n", zipped) + tooltip;
+		paramView.text = string.Join("\n", zipped) + "\n" + tooltip;
 	}
 
 	private int SeekParent(Transform child, Transform potentialAncestor, int depthSearched=0){

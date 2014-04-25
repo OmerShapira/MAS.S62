@@ -22,12 +22,9 @@ public class ContextDisplay : MonoBehaviour {
 	public void SetSelection(GameObject obj){
 		Destroy(selected);
 		if (obj.Equals(gameObject)){
-			selected = (GameObject) GameObject.Instantiate(selectionCube, transform.localToWorldMatrix.MultiplyPoint3x4(boxCollider.center), gameObject.transform.rotation);
-			selected.transform.localScale = transform.localToWorldMatrix.MultiplyVector(boxCollider.size) * 1.05f;
-			selected.transform.parent = transform;
+			SetSelectionCube();
 			manager.UpdateParamDisplay(DisplayNames);
 		}
-
 	}
 
 	public void UpdateColliders(){
@@ -56,6 +53,12 @@ public class ContextDisplay : MonoBehaviour {
 
 	public void UpdateParam(ParamData paramData){
 		SendMessage(Messages[paramData.number], paramData.data);
+	}
+
+	private void SetSelectionCube(){
+		selected = (GameObject) GameObject.Instantiate(selectionCube, transform.localToWorldMatrix.MultiplyPoint3x4(boxCollider.center), gameObject.transform.rotation);
+		selected.transform.localScale = transform.localToWorldMatrix.MultiplyVector(boxCollider.size) * 1.05f;
+		selected.transform.parent = transform;
 	}
 
 }

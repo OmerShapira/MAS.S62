@@ -6,7 +6,7 @@ using System.Linq;
 
 public class BuildingContainer : MonoBehaviour {
 
-	const float CONST_THRESHOLD = 0.1f;
+	const float DISCRETE_EVENT_THRESHOLD = 1f;
 
 	public GameObject[] floorPrototypes;
 	public int numFloors;
@@ -56,7 +56,7 @@ public class BuildingContainer : MonoBehaviour {
 	}
 
 	public void UpdateNumFloors(Vector2 input){
-		if (Mathf.Abs(input.y) > CONST_THRESHOLD){
+		if (Mathf.Abs(input.y) > DISCRETE_EVENT_THRESHOLD){
 			if (input.y > 0){
 				AddFloor();
 			} else {
