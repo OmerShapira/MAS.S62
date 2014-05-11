@@ -1,25 +1,62 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Linq;
 
-[XmlArrayItem("Compund")]
+[ExecuteInEditMode]
+[RequireComponent(typeof(GenericContextDisplay))]
 public class Compound : MonoBehaviour {
 
+	CompoundData _data;
+
+	public CompoundData data {
+		get {return _data;}
+		set {SetData(value);}
+	}
+
+	void Awake(){
+		_data = new CompoundData();
+		_data.ID = GetInstanceID();
+		PrepareDataForSerialization();
+	}
+
+	public void PrepareDataForSerialization(){
+		_data.floors = GetComponentsInChildren<Floor>().OrderBy(x => x.floorNumber).Select(x => x.data).ToList();
+	}
+
+	public void SetData(CompoundData data){
+		if (data.ID ==  GetInstanceID()){
+			//TODO: Solve this issue ; Don't really know where the building should go
+		} else {
+			throw new UnityException("ID Mismatch");
+		}
+	}
+
+	public CompoundData InitializeStructure(){
+		GetComponentInChildren<Building>().InitializeStructure();
+		_data = new CompoundData();
+		_data.ID = GetInstanceID();
+		PrepareDataForSerialization();
+		return _data;
+	}
+
+}
+
+[XmlInclude(typeof(FloorData))]
+[XmlType("Compound")]
+public class CompoundData{
+	public int ID = -1;
 	[XmlElement("Sidewalk")]
-	public Vector4 sidewalk;
+	public Vector4 sidewalk = Vector4.zero;
+	
+	[XmlArray("Floors"), XmlArrayItem("Floor", typeof(Floor))]
+	public List<FloorData> floors;
 
-	[XmlArray("Floors")]
-	List<Floor> floors;
+	public void Add(FloorData data){
+		floors.Add(data);
+	}
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

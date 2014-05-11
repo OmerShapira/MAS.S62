@@ -11,12 +11,12 @@ public class GenericContextDisplay : MonoBehaviour {
 	
 	SceneManagerState manager;
 	GameObject selected;
-	Collider collider;
+	Collider ctxCollider;
 	public Material selectionMaterial;
 	
 	void Awake(){
 		manager = FindObjectOfType<SceneManagerState>();
-		collider = GetComponent<Collider>();
+		ctxCollider = GetComponent<Collider>();
 		UpdateColliders();
 	}
 	

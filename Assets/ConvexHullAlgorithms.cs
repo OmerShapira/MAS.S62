@@ -181,7 +181,7 @@ public class ConvexHullAlgorithms
 		var extremes = vertices.Aggregate(
 			new {min = Mathf.Infinity, max = Mathf.NegativeInfinity}, 
 			(curr, v) => new {min = v.y < curr.min ? v.y : curr.min, max = v.y > curr.max ? v.y : curr.max});
-		var convex = ConvexHullAlgorithms.GrahamScan(flattened.ToList());
+		var convex = ConvexHullAlgorithms.GrahamScan(distinct.ToList());
 		//Actually switching dimension order here, shouldn't matter (No Loss Of Generality);
 		int[] triangulated = (new Triangulator(convex.Select(v => new Vector2(v.x, v.z)))).Triangulate();
 

@@ -21,6 +21,8 @@ namespace GameUtils {
 //	}
 //}
 
+//	public class 
+
 	public class ParamData{
 		public int number;
 		public Vector2 data;

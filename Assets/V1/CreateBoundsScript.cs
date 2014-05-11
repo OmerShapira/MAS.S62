@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-using UnityEngine;
-using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+
 
 
 public class CreateBoundsScript : MonoBehaviour {
