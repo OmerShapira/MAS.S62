@@ -45,7 +45,6 @@ public class Block : MonoBehaviour {
 
 }
 
-//[XmlInclude(typeof(CompoundData))]
 [XmlType("Block")]
 public class BlockData{
 	[XmlElement("ID")]

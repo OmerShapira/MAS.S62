@@ -51,7 +51,6 @@ public class GenericContextDisplay : MonoBehaviour {
 		selected.GetComponent<MeshRenderer>().material = selectionMaterial;
 
 
-//		selected = (GameObject) GameObject.Instantiate(selectionCube, transform.localToWorldMatrix.MultiplyPoint3x4(collider.center), gameObject.transform.rotation);
 	}
 	
 }

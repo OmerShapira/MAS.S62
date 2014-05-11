@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using GameUtils;
 
 public class ConvexHullAlgorithms
 {
@@ -186,13 +187,31 @@ public class ConvexHullAlgorithms
 		int[] triangulated = (new Triangulator(convex.Select(v => new Vector2(v.x, v.z)))).Triangulate();
 
 		var verts = new List<Vector3>();
+		var uvs = new List<Vector2>();
 		var tris = new List<int>();
 
 		verts.InsertRange(0, convex.Select(v => new Vector3(v.x, extremes.min, v.z)));
+		var distances = Functional.Zip (verts, verts.Skip (1), ((v1, v2) => Vector2.Distance(v1, v2)));
+		var distancesNormalized = (from d in distances select d / distances.Sum()).ToList();
+
+		for (int i = 0 ; i < verts.Count ; i++){
+			//Totally ghetto UV mapping algorithm
+			//NOT diffeomorphic to texture domain
+			//NO CONTINUOUS FIRST DERIVATIVE
+			//NORMALS MAY CRY
+			//#YOLO
+			if (i == 0){
+				uvs.Add(new Vector2(0,0.25f));
+			} else {
+				uvs.Add(new Vector2(distancesNormalized[i - 1], 0.25f));
+			}
+		}
 		tris.InsertRange(0, triangulated);
 
 		var increment = verts.Count;
 		verts.InsertRange(increment, convex.Select(v => new Vector3(v.x, extremes.max, v.z)));
+		var buffer = uvs.Select(v => v + new Vector2(0,0.5f)).ToList();
+		uvs.InsertRange(increment, buffer);
 		tris.InsertRange(tris.Count, triangulated.Select(i => i + increment));
 
 		for (int i = 0 ; i < convex.Count - 1; i++){
@@ -208,6 +227,7 @@ public class ConvexHullAlgorithms
 
 		var outputMesh = new Mesh();
 		outputMesh.vertices = verts.Select(v => worldToLocal.MultiplyPoint3x4(v)).ToArray();
+		outputMesh.uv = uvs.ToArray();
 		outputMesh.triangles = tris.ToArray();
 		outputMesh.RecalculateNormals();
 		outputMesh.RecalculateBounds();

@@ -43,7 +43,6 @@ public class Compound : MonoBehaviour {
 
 }
 
-//[XmlInclude(typeof(FloorData))]
 [XmlType("Compound")]
 public class CompoundData{
 	[XmlElement("ID")]

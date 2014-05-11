@@ -24,22 +24,28 @@ public class Floor : MonoBehaviour {
 		}
 	}
 
-//	void OnEnable(){
-//		data = new FloorData();
-//		data.ID = GetInstanceID();
-//	}
+	public void Build (FloorData data, int floorNumber){
+		this.floorNumber = floorNumber;
+		SetData(data);
+		UpdateProperties();
+	}
 
 	public void SetData(FloorData data){
-		if (data.ID == GetInstanceID()){
-			this._data = data;
-		} else {
-			throw new UnityException("ID Mismatch");
-		}
+		this._data = data;
+		this._data.ID = GetInstanceID();
+	}
+
+	public void SetType(int numtype){
+		SetType ((FloorType) numtype);
 	}
 
 	public void SetType(FloorType type){
 		this._data.type = type;
 		//TODO: Set dirty
+	}
+
+	private void UpdateProperties(){
+
 	}
 }
 

@@ -130,12 +130,14 @@ public class SceneManagerState : MonoBehaviour {
 	public void LoadXMLScene(string name){
 		//TODO: Check if file is saved
 		serializer = new XmlSerializer(typeof(SceneData));
-		SceneManagerState s;
+		SceneData s;
 		using (var stream = new FileStream(Path.Combine(Application.dataPath, name), FileMode.Open)){
-			s = serializer.Deserialize (stream) as SceneManagerState;
+			s = serializer.Deserialize (stream) as SceneData;
 		}
-		//use InstanceIDToObject
+		foreach(var b in s.blocks){
 
+		}
+		
 	}
 
 	public void SaveXMLScene(){
@@ -168,9 +170,9 @@ public class SceneManagerState : MonoBehaviour {
 
 }
 
-//[XmlInclude(typeof(BlockData))]
+
 [XmlRoot("Scene")]
-public class SceneData { //: IEnumerable<BlockData>
+public class SceneData { 
 	[XmlArray("Blocks"), XmlArrayItem("Block", typeof(BlockData))]
 	public List<BlockData> blocks;
 			
@@ -181,14 +183,6 @@ public class SceneData { //: IEnumerable<BlockData>
 	public void Add(BlockData data){
 		blocks.Add(data);
 	}
-
-//	public IEnumerator<BlockData> GetEnumerator(){
-//		return blocks.GetEnumerator();
-//	}
-
-//	public IEnumerator GetEnumerator(){
-//		return blocks.GetEnumerator();
-//	}
 
 }
 

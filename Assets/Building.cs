@@ -6,7 +6,8 @@ using System.Linq;
 [ExecuteInEditMode]
 public class Building : MonoBehaviour {
 
-	public GameObject[] prototypes;
+	public GameObject prototype;
+	public Material[] skins;
 	
 	public void InitializeStructure(){
 		if(transform.childCount > 0){
@@ -25,15 +26,21 @@ public class Building : MonoBehaviour {
 				sorted[i].floorNumber = i;
 			}
 			//make some prototypes
-			if ((prototypes == null) || (prototypes.Length == 0)){
-				prototypes = new GameObject[1];
-				prototypes[0] = sorted[0].gameObject;
+			if ((prototype == null)){
+				prototype = sorted[0].gameObject;
+			}
+			if (skins == null || skins.Length == 0){
+
 			}
 		}
 	}
 
 
-	public void Rebuild(){
+//	public void RebuildFromList(){
+//
+//	}
+
+	public void Build(){
 
 	}
 }
