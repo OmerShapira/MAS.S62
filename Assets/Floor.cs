@@ -53,8 +53,8 @@ public class FloorData{
 
 [XmlType("FloorType")]
 public enum FloorType{
-	[XmlEnum(Name = "Residential")]
+	[XmlEnum(Name = "0")]
 	Residential = 0, 
-	[XmlEnum(Name = "Commercial")]
+	[XmlEnum(Name = "1")]
 	Commercial = 1
 }

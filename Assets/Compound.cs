@@ -34,24 +34,24 @@ public class Compound : MonoBehaviour {
 		}
 	}
 
-	public CompoundData InitializeStructure(){
+	public void InitializeStructure(){
 		GetComponentInChildren<Building>().InitializeStructure();
 		_data = new CompoundData();
 		_data.ID = GetInstanceID();
 		PrepareDataForSerialization();
-		return _data;
 	}
 
 }
 
-[XmlInclude(typeof(FloorData))]
+//[XmlInclude(typeof(FloorData))]
 [XmlType("Compound")]
 public class CompoundData{
+	[XmlElement("ID")]
 	public int ID = -1;
 	[XmlElement("Sidewalk")]
 	public Vector4 sidewalk = Vector4.zero;
 	
-	[XmlArray("Floors"), XmlArrayItem("Floor", typeof(Floor))]
+	[XmlArray("Floors"), XmlArrayItem("Floor", typeof(FloorData))]
 	public List<FloorData> floors;
 
 	public void Add(FloorData data){

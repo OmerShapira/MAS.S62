@@ -143,7 +143,7 @@ public class SceneManagerState : MonoBehaviour {
 			throw new UnityException("Nowhere to save");
 		}
 		//FIXME: Not sure sbout this
-		using(var stream = new FileStream(Path.Combine(Application.dataPath, fileName), FileMode.OpenOrCreate))
+		using(var stream = new FileStream(Path.Combine(Application.dataPath, fileName), FileMode.Create))
 		{
 			serializer.Serialize(stream, _data);
 		}
@@ -168,7 +168,7 @@ public class SceneManagerState : MonoBehaviour {
 
 }
 
-[XmlInclude(typeof(BlockData))]
+//[XmlInclude(typeof(BlockData))]
 [XmlRoot("Scene")]
 public class SceneData { //: IEnumerable<BlockData>
 	[XmlArray("Blocks"), XmlArrayItem("Block", typeof(BlockData))]

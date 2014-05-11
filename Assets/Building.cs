@@ -18,7 +18,7 @@ public class Building : MonoBehaviour {
 				unsorted.Add(f.gameObject.GetComponent<Floor>());
 			}
 			var sorted = (from f in unsorted
-              let y = f.transform.position.y + f.GetComponent<MeshFilter>().mesh.vertices.Select(x => (f.transform.localToWorldMatrix.MultiplyPoint3x4(x)).y).Average()
+              let y = f.transform.position.y + f.GetComponent<MeshFilter>().sharedMesh.vertices.Select(x => (f.transform.localToWorldMatrix.MultiplyPoint3x4(x)).y).Average()
 				orderby y
 	         	select f).ToList();
 			for (int i = 0 ; i < sorted.Count ; i ++){

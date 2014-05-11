@@ -36,14 +36,16 @@ public class Block : MonoBehaviour {
 	}
 
 	public void InitializeStructure(){
+		_data.compounds.Clear();
 		foreach(var c in GetComponentsInChildren<Compound>()){
 			c.InitializeStructure();
+			_data.compounds.Add(c.data);
 		}
 	}
 
 }
 
-[XmlInclude(typeof(CompoundData))]
+//[XmlInclude(typeof(CompoundData))]
 [XmlType("Block")]
 public class BlockData{
 	[XmlElement("ID")]
